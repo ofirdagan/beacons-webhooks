@@ -1,0 +1,31 @@
+{
+  "name": "BeaconWebhooks",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "clean": "rm -rf node_modules; yarn",
+    "test": "jest"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "events": "^3.0.0",
+    "native-base": "^2.6.1",
+    "react": "16.3.1",
+    "react-native": "0.55.4",
+    "react-native-beacons-manager": "^1.0.7",
+    "react-native-ibeacon": "^0.6.0",
+    "react-native-navigation": "^2.0.2381",
+    "react-native-ui-lib": "^3.3.135",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "babel-jest": "23.2.0",
+    "babel-preset-react-native": "4.0.0",
+    "jest": "23.2.0",
+    "react-test-renderer": "16.3.1"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
