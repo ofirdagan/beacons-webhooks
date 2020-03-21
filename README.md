@@ -14,8 +14,8 @@ Features:
 * iOS / Android
 * Open source trust
 
-![webhook list screenshot](src/docs/images/webhooks-list.png =250x250)
-![beacons list screenshot](src/docs/images/beacons-list.jpeg =250x250)
+![webhook list screenshot](src/docs/images/webhooks-list.png)
+![beacons list screenshot](src/docs/images/beacons-list.jpeg)
 
 ### Develop
 
