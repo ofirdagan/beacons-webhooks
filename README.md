@@ -9,8 +9,8 @@ Soon on AppStore and Google Play
 
 Features:
 
-* Let’s you register beacons to monitor
-* Let’s you define webhooks for beacons by proximity
+* Lets you register beacons to monitor
+* Lets you define webhooks for beacons by proximity
 * iOS / Android
 * Open source trust
 

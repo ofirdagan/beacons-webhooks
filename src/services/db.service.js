@@ -7,15 +7,15 @@ class DBService {
   async loadBeacons() {
     try {
       const beaconsStr = await AsyncStorage.getItem(DB_KEYS.BEACONS);
-      const beacons = JSON.parse(beaconsStr);
+      const beacons = beaconsStr ? JSON.parse(beaconsStr): {};
       Object.keys(beacons).forEach(beaconName => {
         const beacon = beacons[beaconName];
         beacon.major = beacon.major ? parseInt(beacon.major) : null;
         beacon.minor = beacon.minor ? parseInt(beacon.minor) : null;
       });
-      return beacons || {};
+      return beacons;
     } catch(error) {
-      console.log(`Error loading beacons: `, error);
+      console.error(`Error loading beacons: `, error);
       throw error;
     }
   }
@@ -48,10 +48,10 @@ class DBService {
   async loadWebhooks() {
     try {
       const webhooksStr = await AsyncStorage.getItem(DB_KEYS.WEBHOOKS);
-      const webhooks = JSON.parse(webhooksStr);
-      return webhooks || {};
+      const webhooks = webhooksStr ? JSON.parse(webhooksStr) : {};
+      return webhooks;
     } catch(error) {
-      console.log(`Error loading webhooks: `, error);
+      console.error(`Error loading webhooks: `, error);
       throw error;
     }
   }

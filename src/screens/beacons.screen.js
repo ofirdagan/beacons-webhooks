@@ -7,6 +7,8 @@ import { Navigation } from 'react-native-navigation';
 import dbService from '../services/db.service';
 import appEvents from '../services/app-events';
 import beaconService from '../services/beacon.service';
+import {log} from '../services/remote-logger';
+import {AppState} from 'react-native'
 
 type Props = {};
 export default class BeaconsListScreen extends PureComponent<Props> {
@@ -15,12 +17,14 @@ export default class BeaconsListScreen extends PureComponent<Props> {
     super(props);
     this.renderRow = this.renderRow.bind(this);
     this.renderRightHiddenRow = this.renderRightHiddenRow.bind(this);
+    this._handleAppStateChange = this._handleAppStateChange.bind(this);
     this.editOrAdd = this.editOrAdd.bind(this);
     this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this._loadBeacons();
     this.state = {
       listViewData: [],
-      currentActiveBeacons: []
+      currentActiveBeacons: [],
+      appState: AppState.currentState
     };
     appEvents.on('beaconChanged', (beacon) => {
       this._loadBeacons();
@@ -28,6 +32,23 @@ export default class BeaconsListScreen extends PureComponent<Props> {
     beaconService.addBeaconsMonitorListener(currentActiveBeacons => {
       this.setState({currentActiveBeacons});
     });
+    AppState.addEventListener('change', this._handleAppStateChange);
+    setTimeout(() => {
+      beaconService.startRangingInAllRegions();
+    }, 1000);
+
+  }
+
+
+  _handleAppStateChange(nextAppState) {
+    if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
+      log('coming to foreground');
+      beaconService.startRangingInAllRegions();
+    } else {
+      log('going to background');
+      beaconService.stopRangingInAllRegions();
+    }
+    this.setState({appState: nextAppState});
   }
 
   async _loadBeacons() {
