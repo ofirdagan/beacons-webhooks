@@ -1,10 +1,11 @@
 import React, { PureComponent } from 'react';
-import { Container, Content, Form, Item, Input, Picker, Icon, Left, Right, Text } from 'native-base';
+import { Button, Container, Content, Form, Item, Input, Picker, Icon, Left, Right, Text } from 'native-base';
 import {StyleSheet} from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import {dbKeys} from '../constants';
 import dbService from '../services/db.service';
 import {PROXIMITY_NAMES} from '../constants';
+import axios from 'axios';
 
 type Props = {};
 export default class EditWebhookScreen extends PureComponent<Props> {
@@ -33,6 +34,7 @@ export default class EditWebhookScreen extends PureComponent<Props> {
     this.saveWebhook = this.saveWebhook.bind(this);
     this.onBeaconPick = this.onBeaconPick.bind(this);
     this.onProximityPick = this.onProximityPick.bind(this);
+    this.onTestWebHookPressed = this.onTestWebHookPressed.bind(this);
 
     Navigation.events().registerNativeEventListener(async (eventId, params) => {
       const isButtonPressed = eventId === 'buttonPressed';
@@ -72,6 +74,11 @@ export default class EditWebhookScreen extends PureComponent<Props> {
       proximity
     };
     this.setState({webhook: newWebhook});
+  }
+
+  onTestWebHookPressed() {
+    const {webhook} = this.state;
+    axios.get(webhook.url);
   }
 
   renderInput(placeholder, name) {
@@ -150,6 +157,10 @@ export default class EditWebhookScreen extends PureComponent<Props> {
               {this.renderInput('URL', 'url')}
             </Item>
           </Form>
+          <Button transparent info onPress={this.onTestWebHookPressed}>
+            <Icon active name="flask" />
+            <Text>Test</Text>
+          </Button>
         </Content>
       </Container>
     );
