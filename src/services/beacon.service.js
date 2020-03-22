@@ -106,8 +106,9 @@ class BeaconService {
     const rangeSubscription = this.eventEmitter.addListener(
       'beaconsDidRange',
       data => {
-        const beacons = (data && data.beacons) || [{proximity: 'beacon not found'}];
-        log(`beaconsDidRange proximity: ${data.beacons[0].proximity}`);
+        const beacons = data && data.beacons;
+        const firstBeaconProximity = beacons && beacons.length > 0 ? beacons[0].proximity : 'beacon not found';
+        log(`beaconsDidRange proximity: ${firstBeaconProximity}`);
         this._checkForListeners(beacons);
         this._checkForMonitorListeners(beacons);
         this._setState(beacons);
