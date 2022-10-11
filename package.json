@@ -12,7 +12,7 @@
     "events": "^3.0.0",
     "native-base": "^2.6.1",
     "react": "16.3.1",
-    "react-native": "0.55.4",
+    "react-native": "0.70.2",
     "react-native-beacons-manager": "^1.0.7",
     "react-native-ibeacon": "^0.6.0",
     "react-native-navigation": "^2.0.2381",
